@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
 Description:
-Function that takes a float 
+Function that takes a float
 (a) and a float (b) as
 arguments and returns their
 sum as float

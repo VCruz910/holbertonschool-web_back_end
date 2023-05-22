@@ -8,7 +8,7 @@ with the appropiate types.
 from typing import Iterable, Tuple, Sequence, List
 
 
-def element_length(lst: Iterable[Sequence]) -> List[Tuple[List, int]]:
+def element_length(lst: Iterable[Sequence]) -> List[Tuple[Sequence, int]]:
     """
     Returns value with
     appropiate types.

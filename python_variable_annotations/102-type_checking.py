@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
 Description:
-A function to be validated in 
+A function to be validated in
 mypy and apply changes if
 needed
 """

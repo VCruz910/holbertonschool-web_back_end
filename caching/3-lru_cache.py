@@ -11,7 +11,7 @@ BaseCaching = __import__('base_caching').BaseCaching
 class LRUCache(BaseCaching):
     """
     Inherits all behaviors from BaseCaching
-    
+
         Attributes:
           __init__ - method that initializes class instance
           put - method that adds a key/value pair to cache

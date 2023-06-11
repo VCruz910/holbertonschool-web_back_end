@@ -1,17 +1,12 @@
 #!/usr/bin/env python3
-"""
-Hypermedia_pagination
-"""
+''' Hypermedia pagination '''
 import csv
 import math
-from typing import Tuple, List, Dict, Union
+from typing import Dict, List, Tuple
 
 
 class Server:
-    """
-    Server class to paginate
-    a database of popular
-    baby names.
+    """Server class to paginate a database of popular baby names.
     """
     DATA_FILE = "Popular_Baby_Names.csv"
 
@@ -19,8 +14,7 @@ class Server:
         self.__dataset = None
 
     def dataset(self) -> List[List]:
-        """
-        Cached dataset
+        """Cached dataset
         """
         if self.__dataset is None:
             with open(self.DATA_FILE) as f:
@@ -30,56 +24,37 @@ class Server:
 
         return self.__dataset
 
-    def index_range(page: int, page_size: int) -> Tuple[int, int]:
-        """
-        Returns a tuple of size two containing a
-        start index and an end index corresponding to the
-        range of indexes to return in a list
-        for those particular pagination parameters.
-        """
-        end: int = page * page_size
-        start: int = 0
-        for i in range(page - 1):
-            start += page_size
-        return (start, end)
-
     def get_page(self, page: int = 1, page_size: int = 10) -> List[List]:
-        """
-        Gets page Simple pagination
-        """
-        assert isinstance(page, int) and isinstance(page_size, int)
-        assert page > 0 and page_size > 0
-        dataset = self.dataset()
-        start, end = self.index_range(page, page_size)
-        if end > len(dataset):
+        ''' def get page '''
+        assert type(page_size) is int and type(page) is int
+        assert page > 0
+        assert page_size > 0
+        self.dataset()
+        i = index_range(page, page_size)
+        if i[0] >= len(self.__dataset):
             return []
-        return [list(dataset[row]) for row in range(start, end)]
-
-    def get_hyper(self, page: int = 1, page_size: int = 10) ->\
-            Dict[str, Union[List[List], None, int]]:
-        """
-        Gets page and return dict
-        """
-        data: List = self.get_page(page, page_size)
-        size_dataset: int = len(self.dataset())
-        totalPage = math.ceil(size_dataset / page_size)
-        if page - 1 == 0:
-            prev_page = None
         else:
-            prev_page = page - 1
+            return self.__dataset[i[0]:i[1]]
 
-        if page + 1 > size_dataset or data == []:
-            next_page = None
-        else:
-            next_page = page + 1
+    def get_hyper(self, page: int = 1, page_size: int = 10) -> Dict:
+        ''' Def get hyper '''
+        dataset_items = len(self.dataset())
+        data = self.get_page(page, page_size)
+        total_pages = math.ceil(dataset_items / page_size)
 
-        if data is not []:
-            pageSize = page_size
+        p = {
+            "page": page,
+            "page_size": page_size if page < total_pages else 0,
+            "data": data,
+            "next_page": page + 1 if page + 1 < total_pages else None,
+            "prev_page": page - 1 if page - 1 > 0 else None,
+            "total_pages": total_pages
+            }
+        return p
 
-        hateoas: Dict = {'page_size': pageSize,
-                         'page': page,
-                         'data': data,
-                         'next_page': next_page,
-                         'prev_page': prev_page,
-                         'total_pages': totalPage}
-        return hateoas
+
+def index_range(page: int, page_size: int) -> Tuple[int, int]:
+    ''' Def index range '''
+    index = page * page_size - page_size
+    index_1 = index + page_size
+    return (index, index_1)

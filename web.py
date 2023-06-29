@@ -1,43 +1,38 @@
 #!/usr/bin/env python3
 """
-Expiring Web Cache Module
+    Cache class that stores instance of the redis
+    client as a private variable named
+    _redis using redis.Redist()
+    and flush the instance using flushdb.
 """
 
 import redis
 import requests
-from typing import Callable
 from functools import wraps
+from typing import Callable
 
-redis = redis.Redis()
+_redis = redis.Redis()
 
 
-def wrap_requests(method: Callable) -> Callable:
+def counter(method: Callable) -> Callable:
     """
-    Decorator
-    Wrapper
     """
-
     @wraps(method)
     def wrapper(url):
-        """
-        Wrapper
-        """
-        redis.incr(f"count:{url}")
-        cached_response = redis.get(f"cached:{url}")
-        if cached_response:
-            return cached_response.decode('utf-8')
+        Urlkey = url + "key"
+        if _redis.get(Urlkey):
+            return _redis.get(Urlkey).decode("utf-8")
+        _redis.incr("count:{}".format(url))
         result = method(url)
-        redis.setex(f"cached:{url}", 10, result)
+        _redis.set(Urlkey, result)
+        _redis.expire(Urlkey, 10)
+
         return result
+    return(wrapper)
 
-    return wrapper
 
-
-@wrap_requests
+@counter
 def get_page(url: str) -> str:
     """
-    Gets page
-    self descriptive
     """
-    response = requests.get(url)
-    return response.text
+    return requests.get(url).text

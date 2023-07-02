@@ -1,13 +1,14 @@
 -- Add bonus
+
 DELIMITER $$
 
 CREATE PROCEDURE ADDBONUS(
-    IN USER_ID INT,
-    PROJECT_NAME VARCHAR(255),
-    SCORE FLOAT
+    IN USER_ID INTEGER,
+    IN PROJECT_NAME VARCHAR(255),
+    IN SCORE INTEGER
 )
 BEGIN
-    INSERT INTO PROJECTS (
+    INSERT INTO PROJECTS(
         NAME
     )
         SELECT
@@ -21,15 +22,15 @@ BEGIN
                 FROM
                     PROJECTS
                 WHERE
-                    NAME = PROJECT_NAME
+                    NAME = PROJECT_NAME LIMIT 1
             );
     INSERT INTO CORRECTIONS (
         USER_ID,
         PROJECT_ID,
         SCORE
-    ) VALUES (
+    ) VALUES(
         USER_ID,
         (SELECT ID FROM PROJECTS WHERE NAME = PROJECT_NAME),
         SCORE
     );
-    END$$ DELIMITER;
+END $$ DELIMITER;

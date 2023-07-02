@@ -1,5 +1,6 @@
 -- Creates a stored procedure
 -- ComputeOverallScoreForUser
+
 DELIMITER $$
 
 DROP PROCEDURE IF EXISTS COMPUTEAVERAGESCOREFORUSER;
@@ -15,4 +16,4 @@ BEGIN
         )
     WHERE
         ID = USER_ID;
-    END$$ DELIMITER;
+END $$ DELIMITER;

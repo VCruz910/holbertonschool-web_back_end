@@ -1,0 +1,6 @@
+-- Creating a trigger that triggers
+-- ?? when a new order inserted
+
+CREATE TRIGGER DECREASSE_QUANTITY AFTER
+    INSERT ON ORDERS FOR EACH ROW
+        UPDATE ITEMS SET QUANTITY = QUANTITY - NEW.NUMBER WHERE ITEMS.NAME = NEW.ITEM_NAME;

@@ -1,26 +1,26 @@
 -- Initial
-DROP TABLE IF EXISTS ITEMS;
+DROP TABLE IF EXISTS items;
+DROP TABLE IF EXISTS orders;
 
-DROP TABLE IF EXISTS ORDERS;
-
-CREATE TABLE IF NOT EXISTS ITEMS (
-    NAME VARCHAR(255) NOT NULL,
-    QUANTITY INT NOT NULL DEFAULT 10
-);
-
-CREATE TABLE IF NOT EXISTS ORDERS (
-    ITEM_NAME VARCHAR(255) NOT NULL,
-    NUMBER INT NOT NULL
-);
-
-INSERT INTO ITEMS (
-    NAME
-) VALUES (
-    "apple"
-),
+CREATE TABLE
+IF NOT EXISTS items
 (
-    "pineapple"
-),
-(
-    "pear"
+    name VARCHAR
+(255) NOT NULL,
+    quantity int NOT NULL DEFAULT 10
 );
+
+CREATE TABLE
+IF NOT EXISTS orders
+(
+    item_name VARCHAR
+(255) NOT NULL,
+    number int NOT NULL
+);
+
+INSERT INTO items
+    (name)
+VALUES
+    ("apple"),
+    ("pineapple"),
+    ("pear");

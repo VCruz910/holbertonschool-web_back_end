@@ -2,10 +2,7 @@
 -- their main style, ranked by their longevity
 
 SELECT
-    BAND_NAME,
-    COALESCE(SPLIT,
-    2020) - FORMED AS LIFESPAN
-FROM
-    METAL_BANDS
-WHERE
-    STYLE LIKE '%Glam rock%';
+    band_name, (IFNULL(split, 2020) - formed) AS lifespan
+FROM metal_bands
+WHERE style LIKE '%Glam rock%'
+ORDER BY lifespan DESC;

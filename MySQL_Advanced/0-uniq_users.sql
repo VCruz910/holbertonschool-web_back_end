@@ -3,11 +3,9 @@
 
 CREATE TABLE
 IF NOT EXISTS 'users' (
-    'id' int NOT NULL AUTO_INCREMENT,
+    'id' INTEGER PRIMARY KEY AUTO_INCREMENT,
     'email' VARCHAR
 (255) NOT NULL UNIQUE,
     'name' VARCHAR
 (255),
-    PRIMARY KEY
-('id')
 );

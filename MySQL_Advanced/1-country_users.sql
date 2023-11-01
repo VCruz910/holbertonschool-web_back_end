@@ -6,9 +6,14 @@
 -- never null (= default will be the first element of the enumeration, here US)
 
 
-CREATE TABLE IF NOT EXISTS USERS (
-    ID INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
-    EMAIL VARCHAR(255) NOT NULL UNIQUE,
-    NAME VARCHAR(255),
-    COUNTRY ENUM ('US', 'CO', 'TN') NOT NULL
+CREATE TABLE
+IF NOT EXISTS users
+(
+    id INTEGER PRIMARY KEY AUTO_INCREMENT,
+    email VARCHAR
+(255) NOT NULL UNIQUE,
+    name VARCHAR
+(255),
+    country ENUM
+('US', 'CO', 'TN') NOT NULL DEFAULT 'US'
 );

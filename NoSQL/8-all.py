@@ -4,6 +4,8 @@ List all mongo
 in python
 """
 
+import pymongo
+
 
 def list_all(mongo_collection):
     """
